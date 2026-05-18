@@ -1,6 +1,8 @@
 # Invincible Tycoon - Setup Instructions
 
-This repository contains the code for a Roblox Tycoon based on the "Invincible" series. To make the game functional in Roblox Studio, you must set up the physical models as described below.
+This repository contains the code for a Roblox Tycoon based on the "Invincible" series.
+
+**New to Roblox?** Read the [BEGINNER_GUIDE.md](BEGINNER_GUIDE.md) first!
 
 ## 1. Tycoon Plot Setup
 Create a `Model` in `Workspace` and name it `Tycoon1` (or anything containing "Tycoon").
