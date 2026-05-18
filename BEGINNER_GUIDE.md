@@ -9,11 +9,14 @@ Since you've never built a Roblox game before, this guide will walk you through 
 
 ## Step 2: FAST TRACK (Automation)
 If you want me to set up the basics for you automatically:
-1. In Roblox Studio, go to the **View** tab at the top and click **Command Bar** (it will open a small text box at the bottom).
+1. In Roblox Studio, go to the **View** tab at the top and click **Command Bar**.
+   - *This opens a small white text box at the very bottom of your screen.*
 2. Open the file `src/shared/AutoBuildPlot.lua` in this folder.
-3. **Copy** all the code from that file and **Paste** it into the Command Bar in Studio.
-4. Press **Enter**.
-5. **BOOM!** Your entire tycoon structure is created for you instantly.
+3. **Copy** all the code from that file.
+4. **Paste** it into that small text box at the bottom of Roblox Studio.
+5. **Press the ENTER key on your keyboard.**
+   - *Important: Do NOT click the "Run" button in the top menu. You must press Enter in the text box.*
+6. **BOOM!** Look at your Workspace—your entire tycoon structure is created for you instantly!
 
 ## Step 3: Manual Setup (If you want to build yourself)
 In Roblox, everything you see is a "Part."

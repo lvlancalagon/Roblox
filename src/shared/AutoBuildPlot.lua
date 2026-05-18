@@ -1,9 +1,10 @@
 -- INSTRUCTIONS: Copy and paste this ENTIRE script into the Roblox Studio Command Bar
--- (View Tab -> Command Bar) and press Enter to generate your tycoon plot automatically.
-
-local TycoonSettings = require(game:GetService("ReplicatedStorage"):WaitForChild("Shared"):WaitForChild("TycoonSettings"))
+-- (View Tab -> Command Bar) and press Enter on your keyboard.
+-- DO NOT click the "Run" button in the top menu; use the Command Bar at the bottom.
 
 local function createTycoonPlot()
+	print("🚀 Starting Invincible Tycoon Auto-Build...")
+
 	local tycoon = Instance.new("Model")
 	tycoon.Name = "Tycoon1"
 	tycoon.Parent = workspace
@@ -40,7 +41,17 @@ local function createTycoonPlot()
 	ores.Name = "Ores"
 	ores.Parent = tycoon
 
-	-- 5. Generate Items
+	-- 5. Item Lists (Self-contained so it works even if you haven't synced yet)
+	local droppers = {
+		"Mark's Dumbbell", "Viltrumite Ore", "Flaxan Tech Dropper",
+		"Mars Rock Dropper", "GDA Satellite Feed", "Atom Eve's Energy"
+	}
+	local upgrades = {
+		"Grayson Residence", "GDA Underground Lab", "Second Floor",
+		"GDA Medical Wing", "Omni-Man's Trophy Room", "Third Floor",
+		"Invincible's Penthouse", "GDA Command Center"
+	}
+
 	local function createPlaceholder(name, isDropper)
 		local model = Instance.new("Model")
 		model.Name = name
@@ -51,7 +62,7 @@ local function createTycoonPlot()
 		part.Size = Vector3.new(5, 5, 5)
 		part.Position = Vector3.new(math.random(-40, 40), 5, math.random(-40, 40))
 		part.Anchored = true
-		part.Transparency = 1 -- Hidden by default
+		part.Transparency = 0.5 -- Slightly visible so you can see where they are
 		part.CanCollide = false
 		part.Parent = model
 
@@ -61,22 +72,24 @@ local function createTycoonPlot()
 			dropPoint.Size = Vector3.new(1, 1, 1)
 			dropPoint.Position = part.Position + Vector3.new(0, 5, 0)
 			dropPoint.Anchored = true
-			dropPoint.Transparency = 1
+			dropPoint.Transparency = 0.8
 			dropPoint.Parent = model
 		end
 
+		print("  ✔ Created placeholder for: " .. name)
 		return model
 	end
 
-	for name, _ in pairs(TycoonSettings.Droppers) do
+	for _, name in ipairs(droppers) do
 		createPlaceholder(name, true)
 	end
 
-	for name, _ in pairs(TycoonSettings.Upgrades) do
+	for _, name in ipairs(upgrades) do
 		createPlaceholder(name, false)
 	end
 
-	print("✅ Invincible Tycoon Plot 'Tycoon1' has been generated successfully!")
+	print("✅ DONE! Your Invincible Tycoon 'Tycoon1' is ready in Workspace.")
+	print("👉 Next step: Sync your code using Rojo as described in the guide.")
 end
 
 createTycoonPlot()
