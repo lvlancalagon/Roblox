@@ -1,0 +1,32 @@
+{
+  "name": "InvincibleTycoon",
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {
+      "Shared": {
+        "$path": "src/shared"
+      },
+      "Events": {
+        "$className": "Folder",
+        "PurchaseRequest": {
+          "$className": "RemoteEvent"
+        },
+        "AbilityRequest": {
+          "$className": "RemoteEvent"
+        }
+      }
+    },
+    "ServerScriptService": {
+      "Server": {
+        "$path": "src/server"
+      }
+    },
+    "StarterPlayer": {
+      "StarterPlayerScripts": {
+        "Client": {
+          "$path": "src/client"
+        }
+      }
+    }
+  }
+}
