@@ -1,22 +1,25 @@
-# Beginner's Guide to Building your Invincible Tycoon
+# 🚀 Ultimate "One-Click" Beginner's Guide
 
-Since you've never built a Roblox game before, this guide will walk you through creating the "models" (the physical objects) that work with the code I've written.
+Since you've never built a Roblox game before, I have created a way to **automate the entire setup**. This will build your tycoon, set up all the scripts, and create all the buttons in seconds.
 
 ## Step 1: Install Roblox Studio
 1. Go to [roblox.com/create](https://www.roblox.com/create).
 2. Click "Start Creating" to download and install Roblox Studio.
 3. Open a new "Baseplate" project.
 
-## Step 2: FAST TRACK (Automation)
-If you want me to set up the basics for you automatically:
+## Step 2: THE "ONE-CLICK" INSTALLER
 1. In Roblox Studio, go to the **View** tab at the top and click **Command Bar**.
    - *This opens a small white text box at the very bottom of your screen.*
-2. Open the file `src/shared/AutoBuildPlot.lua` in this folder.
-3. **Copy** all the code from that file.
-4. **Paste** it into that small text box at the bottom of Roblox Studio.
-5. **Press the ENTER key on your keyboard.**
-   - *Important: Do NOT click the "Run" button in the top menu. You must press Enter in the text box.*
-6. **BOOM!** Look at your Workspace—your entire tycoon structure is created for you instantly!
+2. Open the file `ONE_CLICK_INSTALLER.lua` in this folder.
+3. **Copy** all the code from that file and **Paste** it into the Command Bar in Studio.
+4. **Press ENTER** on your keyboard.
+5. **BOOM!** Your entire game structure is created.
+
+## Step 3: Syncing the Code (Required)
+The installer sets up the folders, but you still need to sync the actual code files:
+1. Install the **Rojo** plugin in Roblox Studio from the [Roblox Marketplace](https://www.roblox.com/library/2912443315/Rojo-6).
+2. In your code editor, run `rojo serve`.
+3. In Roblox Studio, click the Rojo icon and click **Connect**.
 
 ## Step 3: Manual Setup (If you want to build yourself)
 In Roblox, everything you see is a "Part."

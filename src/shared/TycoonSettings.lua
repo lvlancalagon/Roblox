@@ -85,10 +85,20 @@ TycoonSettings.Upgrades = {
 		Description = "Luxury living for Earth's strongest defender.",
 		Dependency = "Third Floor"
 	},
-	["GDA Command Center"] = {
-		Cost = 2500000,
-		Description = "Full control over global defense operations.",
+	["Auto-Collector"] = {
+		Cost = 2000000,
+		Description = "GDA nanobots automatically collect all ore for you.",
 		Dependency = "Invincible's Penthouse"
+	},
+	["Auto-Buyer"] = {
+		Cost = 5000000,
+		Description = "Cecil's AI assistant automatically purchases upgrades for you.",
+		Dependency = "Auto-Collector"
+	},
+	["GDA Command Center"] = {
+		Cost = 10000000,
+		Description = "Full control over global defense operations.",
+		Dependency = "Auto-Buyer"
 	}
 }
 

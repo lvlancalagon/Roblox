@@ -1,5 +1,5 @@
-local Collector = require(script.Parent:WaitForChild("Collector"))
-local DropperHandler = require(script.Parent:WaitForChild("DropperHandler"))
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local TycoonSettings = require(ReplicatedStorage:WaitForChild("Shared"):WaitForChild("TycoonSettings"))
 
 local TycoonManager = {}
 local tycoons = {} -- tycoonModel -> player
@@ -17,14 +17,35 @@ function TycoonManager.ClaimTycoon(player, tycoonModel)
 
 	tycoonModel:SetAttribute("Owner", player.UserId)
 
-	-- Initialize systems
+	local Collector = require(script.Parent:WaitForChild("Collector"))
 	Collector.Init(tycoonModel, player)
 
-	-- Start the first dropper automatically
 	TycoonManager.UnlockItem(player, "Mark's Dumbbell")
 
-	print(player.Name .. " claimed the " .. tycoonModel.Name)
+	-- Auto-Buyer loop
+	task.spawn(function()
+		while playerToTycoon[player] == tycoonModel do
+			task.wait(2)
+			if tycoonModel:GetAttribute("AutoBuyerActive") then
+				TycoonManager.TryAutoBuy(player, tycoonModel)
+			end
+		end
+	end)
+
 	return true
+end
+
+function TycoonManager.TryAutoBuy(player, tycoon)
+	local PurchaseHandler = require(script.Parent:WaitForChild("PurchaseHandler"))
+	-- Find next available items
+	for name, data in pairs(TycoonSettings.Upgrades) do
+		if not TycoonManager.IsOwned(tycoon, name) then
+			local dep = data.Dependency
+			if not dep or TycoonManager.IsOwned(tycoon, dep) then
+				PurchaseHandler.ProcessPurchase(player, name, tycoon)
+			end
+		end
+	end
 end
 
 function TycoonManager.GetTycoonByPlayer(player)
@@ -41,9 +62,14 @@ function TycoonManager.UnlockItem(player, itemName)
 
 	tycoonState[tycoon].ownedItems[itemName] = true
 
+	if itemName == "Auto-Collector" then
+		tycoon:SetAttribute("AutoCollectorActive", true)
+	elseif itemName == "Auto-Buyer" then
+		tycoon:SetAttribute("AutoBuyerActive", true)
+	end
+
 	local itemModel = tycoon:FindFirstChild(itemName)
 	if itemModel then
-		-- Make it visible and functional
 		for _, part in pairs(itemModel:GetDescendants()) do
 			if part:IsA("BasePart") then
 				part.Transparency = 0
@@ -52,18 +78,22 @@ function TycoonManager.UnlockItem(player, itemName)
 		end
 	end
 
-	-- If it's a dropper, start it
-	DropperHandler.StartDropper(tycoon, itemName)
+	local DropperHandler = require(script.Parent:WaitForChild("DropperHandler"))
+	if TycoonSettings.Droppers[itemName] then
+		DropperHandler.StartDropper(tycoon, itemName)
+	end
 end
 
 function TycoonManager.ResetTycoon(player)
 	local tycoon = playerToTycoon[player]
 	if not tycoon then return end
 
+	local DropperHandler = require(script.Parent:WaitForChild("DropperHandler"))
 	DropperHandler.StopAll(tycoon)
 	tycoon:SetAttribute("Owner", 0)
+	tycoon:SetAttribute("AutoCollectorActive", false)
+	tycoon:SetAttribute("AutoBuyerActive", false)
 
-	-- Reset visibility (simplified)
 	for _, item in pairs(tycoon:GetChildren()) do
 		if item:IsA("Model") and item.Name ~= "ClaimPad" then
 			for _, part in pairs(item:GetDescendants()) do
