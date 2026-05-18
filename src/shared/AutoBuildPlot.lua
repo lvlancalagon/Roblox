@@ -41,51 +41,82 @@ local function createTycoonPlot()
 	ores.Name = "Ores"
 	ores.Parent = tycoon
 
-	-- 5. Item Lists (Self-contained so it works even if you haven't synced yet)
-	local droppers = {
-		"Mark's Dumbbell", "Viltrumite Ore", "Flaxan Tech Dropper",
-		"Mars Rock Dropper", "GDA Satellite Feed", "Atom Eve's Energy"
-	}
-	local upgrades = {
-		"Grayson Residence", "GDA Underground Lab", "Second Floor",
-		"GDA Medical Wing", "Omni-Man's Trophy Room", "Third Floor",
-		"Invincible's Penthouse", "GDA Command Center"
+	-- 5. Metadata (Directly included to ensure functionality in Studio)
+	local metadata = {
+		Droppers = {
+			["Mark's Dumbbell"] = {Color = Color3.fromRGB(150, 150, 150), Material = Enum.Material.Metal, Floor = 1},
+			["Viltrumite Ore"] = {Color = Color3.fromRGB(180, 0, 0), Material = Enum.Material.Granite, Floor = 1},
+			["Flaxan Tech Dropper"] = {Color = Color3.fromRGB(0, 255, 100), Material = Enum.Material.Neon, Floor = 2},
+			["Mars Rock Dropper"] = {Color = Color3.fromRGB(255, 100, 0), Material = Enum.Material.Slate, Floor = 2},
+			["GDA Satellite Feed"] = {Color = Color3.fromRGB(0, 100, 255), Material = Enum.Material.Metal, Floor = 3},
+			["Atom Eve's Energy"] = {Color = Color3.fromRGB(255, 100, 200), Material = Enum.Material.Neon, Floor = 3}
+		},
+		Upgrades = {
+			["Grayson Residence"] = {Color = Color3.fromRGB(240, 220, 180), Material = Enum.Material.Wood, Floor = 1},
+			["GDA Underground Lab"] = {Color = Color3.fromRGB(100, 100, 110), Material = Enum.Material.Concrete, Floor = 1},
+			["Second Floor"] = {Color = Color3.fromRGB(200, 200, 200), Material = Enum.Material.SmoothPlastic, Floor = 1},
+			["GDA Medical Wing"] = {Color = Color3.fromRGB(255, 255, 255), Material = Enum.Material.Glass, Floor = 2},
+			["Omni-Man's Trophy Room"] = {Color = Color3.fromRGB(200, 180, 100), Material = Enum.Material.Marble, Floor = 2},
+			["Third Floor"] = {Color = Color3.fromRGB(220, 220, 220), Material = Enum.Material.SmoothPlastic, Floor = 2},
+			["Invincible's Penthouse"] = {Color = Color3.fromRGB(100, 200, 255), Material = Enum.Material.Glass, Floor = 3},
+			["Auto-Collector"] = {Color = Color3.fromRGB(50, 50, 50), Material = Enum.Material.Metal, Floor = 3},
+			["Auto-Buyer"] = {Color = Color3.fromRGB(0, 255, 255), Material = Enum.Material.Neon, Floor = 3},
+			["GDA Command Center"] = {Color = Color3.fromRGB(20, 20, 30), Material = Enum.Material.Neon, Floor = 3}
+		}
 	}
 
-	local function createPlaceholder(name, isDropper)
+	local function createPlaceholder(name, config, isDropper)
 		local model = Instance.new("Model")
 		model.Name = name
 		model.Parent = tycoon
 
+		local floorOffset = (config.Floor - 1) * 20
 		local part = Instance.new("Part")
 		part.Name = "MainPart"
-		part.Size = Vector3.new(5, 5, 5)
-		part.Position = Vector3.new(math.random(-40, 40), 5, math.random(-40, 40))
+		part.Size = Vector3.new(10, 8, 10)
+		part.Position = Vector3.new(math.random(-40, 40), 5 + floorOffset, math.random(-40, 40))
 		part.Anchored = true
-		part.Transparency = 0.5 -- Slightly visible so you can see where they are
+		part.Color = config.Color
+		part.Material = config.Material
+		part.Transparency = 0.5
 		part.CanCollide = false
 		part.Parent = model
+
+		-- Add a simple label
+		local billboard = Instance.new("BillboardGui")
+		billboard.Size = UDim2.new(0, 100, 0, 50)
+		billboard.Adornee = part
+		billboard.AlwaysOnTop = true
+		billboard.Parent = part
+
+		local label = Instance.new("TextLabel")
+		label.Size = UDim2.new(1, 0, 1, 0)
+		label.BackgroundTransparency = 1
+		label.Text = name
+		label.TextColor3 = Color3.new(1, 1, 1)
+		label.TextStrokeTransparency = 0
+		label.Parent = billboard
 
 		if isDropper then
 			local dropPoint = Instance.new("Part")
 			dropPoint.Name = "DropPoint"
 			dropPoint.Size = Vector3.new(1, 1, 1)
-			dropPoint.Position = part.Position + Vector3.new(0, 5, 0)
+			dropPoint.Position = part.Position + Vector3.new(0, 4, 0)
 			dropPoint.Anchored = true
-			dropPoint.Transparency = 0.8
+			dropPoint.Transparency = 1
 			dropPoint.Parent = model
 		end
 
-		print("  ✔ Created placeholder for: " .. name)
+		print("  ✔ Created " .. (isDropper and "Dropper" or "Upgrade") .. ": " .. name .. " (Floor " .. config.Floor .. ")")
 		return model
 	end
 
-	for _, name in ipairs(droppers) do
-		createPlaceholder(name, true)
+	for name, config in pairs(metadata.Droppers) do
+		createPlaceholder(name, config, true)
 	end
 
-	for _, name in ipairs(upgrades) do
-		createPlaceholder(name, false)
+	for name, config in pairs(metadata.Upgrades) do
+		createPlaceholder(name, config, false)
 	end
 
 	print("✅ DONE! Your Invincible Tycoon 'Tycoon1' is ready in Workspace.")
