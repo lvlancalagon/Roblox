@@ -1,6 +1,7 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerScriptService = game:GetService("ServerScriptService")
 local Players = game:GetService("Players")
+local MarketplaceService = game:GetService("MarketplaceService")
 
 -- Require all server-side modules
 local Leaderstats = require(script.Parent:WaitForChild("Leaderstats"))
@@ -32,5 +33,15 @@ end)
 Players.PlayerRemoving:Connect(function(player)
 	TycoonManager.ResetTycoon(player)
 end)
+
+-- Donation Handling
+MarketplaceService.ProcessReceipt = function(receiptInfo)
+	local player = Players:GetPlayerByUserId(receiptInfo.PlayerId)
+	if player then
+		print(player.Name .. " donated " .. receiptInfo.CurrencySpent .. " Robux!")
+		-- You could award a special badge or in-game bonus here
+	end
+	return Enum.ProductPurchaseDecision.PurchaseGranted
+end
 
 print("Invincible Tycoon Server Systems Initialized")

@@ -1,5 +1,6 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local MarketplaceService = game:GetService("MarketplaceService")
 
 local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
@@ -7,6 +8,9 @@ local playerGui = player:WaitForChild("PlayerGui")
 local events = ReplicatedStorage:WaitForChild("Events")
 local purchaseRequest = events:WaitForChild("PurchaseRequest")
 local TycoonSettings = require(ReplicatedStorage:WaitForChild("Shared"):WaitForChild("TycoonSettings"))
+
+-- REPLACE THIS WITH YOUR PRODUCT ID FROM THE DONATIONS GUIDE
+local DONATION_PRODUCT_ID = 0
 
 local buttons = {}
 
@@ -38,6 +42,22 @@ local function createUI()
 	local cash = leaderstats:WaitForChild("Cash")
 	cash.Changed:Connect(function(newValue)
 		cashLabel.Text = "Cash: $" .. newValue
+	end)
+
+	-- Donation Button
+	local donateBtn = Instance.new("TextButton")
+	donateBtn.Name = "DonateButton"
+	donateBtn.Size = UDim2.new(0, 150, 0, 40)
+	donateBtn.Position = UDim2.new(0, 10, 0, 70)
+	donateBtn.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+	donateBtn.Text = "Donate 50 Robux"
+	donateBtn.Parent = screenGui
+	donateBtn.MouseButton1Click:Connect(function()
+		if DONATION_PRODUCT_ID > 0 then
+			MarketplaceService:PromptProductPurchase(player, DONATION_PRODUCT_ID)
+		else
+			print("Set your DONATION_PRODUCT_ID in TycoonClient.client.lua!")
+		end
 	end)
 
 	-- Shop Frame
