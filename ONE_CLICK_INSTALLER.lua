@@ -18,7 +18,7 @@ local function install()
 	ar.Name = "AbilityRequest"
 	ar.Parent = events
 
-	-- 2. Setup Scripts Folder
+	-- 2. Setup Folders
 	local sss = game:GetService("ServerScriptService")
 	local serverFolder = sss:FindFirstChild("Server") or Instance.new("Folder")
 	serverFolder.Name = "Server"
@@ -33,6 +33,11 @@ local function install()
 	local sharedFolder = rs:FindFirstChild("Shared") or Instance.new("Folder")
 	sharedFolder.Name = "Shared"
 	sharedFolder.Parent = rs
+
+	-- NEW: Addons Folder for your custom uploads
+	local addonsFolder = rs:FindFirstChild("Addons") or Instance.new("Folder")
+	addonsFolder.Name = "Addons"
+	addonsFolder.Parent = rs
 
 	print("📦 Folders and Events created.")
 
@@ -68,7 +73,7 @@ local function install()
 	ores.Parent = tycoon
 
 	print("🏗 Physical plot built.")
-	print("✅ Installation Complete! Check ServerScriptService and StarterPlayerScripts.")
+	print("✅ Installation Complete! Check ReplicatedStorage for your 'Addons' folder.")
 	print("👉 Press 'Play' to test!")
 end
 

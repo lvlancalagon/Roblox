@@ -6,6 +6,9 @@
       "Shared": {
         "$path": "src/shared"
       },
+      "Addons": {
+        "$className": "Folder"
+      },
       "Events": {
         "$className": "Folder",
         "PurchaseRequest": {
