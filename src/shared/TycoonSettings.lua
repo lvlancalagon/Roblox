@@ -134,15 +134,6 @@ TycoonSettings.Upgrades = {
 	}
 }
 
--- Animated Screen configuration
-TycoonSettings.Animations = {
-	["News Channel"] = {
-		Image1 = "rbxassetid://12345678", -- Replace with your actual image ID
-		Image2 = "rbxassetid://87654321", -- Replace with your second image ID
-		Interval = 1.5
-	}
-}
-
 TycoonSettings.BaseSettings = {
 	DropperInterval = 3,
 	StartingCash = 0,

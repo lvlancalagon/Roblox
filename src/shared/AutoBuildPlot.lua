@@ -41,24 +41,7 @@ local function createTycoonPlot()
 	ores.Name = "Ores"
 	ores.Parent = tycoon
 
-	-- 5. NEW: Animated Screen Demonstration
-	local screen = Instance.new("Part")
-	screen.Name = "AnimatedScreen"
-	screen.Size = Vector3.new(12, 8, 1)
-	screen.Position = Vector3.new(0, 10, 45)
-	screen.Anchored = true
-	screen.Color = Color3.fromRGB(0, 0, 0)
-	screen.Parent = tycoon
-
-	-- Add Tags and Attributes for the ImageSwitcher
-	local cs = game:GetService("CollectionService")
-	cs:AddTag(screen, "AnimatedImage")
-	screen:SetAttribute("Image1", "rbxassetid://12345678") -- Placeholder
-	screen:SetAttribute("Image2", "rbxassetid://87654321") -- Placeholder
-
-	print("📺 Created Animated Screen demonstration.")
-
-	-- 6. Metadata
+	-- 5. Metadata (Directly included to ensure functionality in Studio)
 	local metadata = {
 		Droppers = {
 			["Mark's Dumbbell"] = {Color = Color3.fromRGB(150, 150, 150), Material = Enum.Material.Metal, Floor = 1},
